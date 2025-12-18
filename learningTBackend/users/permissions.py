@@ -14,7 +14,7 @@ class CanGenerateTest(BasePermission):
     """
     Allows test generation if:
     - user is authenticated AND
-    - user has trials left OR has premium access
+    - user has trials left OR has standard premium gold access 
     """
 
 
@@ -27,7 +27,7 @@ class CanGenerateTest(BasePermission):
             return False
 
 
-        if user.has_premium_access():
+        if user.has_paid_or_gold_access():
             return True
 
 

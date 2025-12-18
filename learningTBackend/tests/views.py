@@ -16,10 +16,11 @@ class GenerateTestView(APIView):
 
         # ---- PLACE YOUR TEST GENERATION LOGIC HERE ----
         # generate HTML file, images, AI voice, etc.
+        # you can know user plan by calling user.user_plan() and you also must know if subscribtion is active from subscription model
 
 
         # Decrease trial ONLY for free users
-        if not user.has_premium_access():
+        if not user.has_paid_or_gold_access():
             user.use_trial()
 
 
@@ -27,7 +28,7 @@ class GenerateTestView(APIView):
         'message': 'Test generated successfully',
         'trials_used': user.trials_used,
         'trial_limit': user.trial_limit,
-        'premium_access': user.has_premium_access(),
+        'has_paid_or_gold_access': user.has_paid_or_gold_access(),
         }, status=status.HTTP_201_CREATED)
     
 

@@ -29,7 +29,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
-    # trial system
+    # trial system 
     trial_limit = models.PositiveIntegerField(default=5)
     trials_used = models.PositiveIntegerField(default=0)
 
@@ -56,12 +56,22 @@ class User(AbstractBaseUser, PermissionsMixin):
             self.trials_used += 1
             self.save(update_fields=['trials_used'])
 
-    def has_premium_access(self):
+    def has_paid_or_gold_access(self):
         if self.is_gold:
             if self.gold_expires_at:
                 return timezone.now() <= self.gold_expires_at
             return True
-        return self.is_premium
+        return self.is_premium or self.is_standard
+    
+    def user_plan(self):
+        if self.is_gold:
+            return "gold"
+        elif self.is_premium:
+            return "premium"
+        elif self.is_standard:
+            return "standard"
+        else:
+            return "free"
 
     def __str__(self):
         return self.email

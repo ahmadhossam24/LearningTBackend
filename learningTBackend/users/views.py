@@ -148,9 +148,8 @@ class CreatePayPalSubscription(APIView):
         response = paypal_client().execute(request_paypal)
         return Response(response.result.__dict__)
     
-class UpgradeSubscriptionView(APIView):
+class UpgradeSubscriptionView(APIView):# not known view no benefit should replaced with one that enables admin to make gold user 
     permission_classes = [IsAuthenticated]
-
 
     def post(self, request):
         plan = request.data.get('plan')
