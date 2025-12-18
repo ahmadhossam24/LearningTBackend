@@ -16,8 +16,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include,path
+from rest_framework_simplejwt.views import ( TokenObtainPairView, TokenRefreshView, )
 
 urlpatterns = [
     path('users/', include('users.urls')),
     path('admin/', admin.site.urls),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # login 
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # refresh and this should be called from client when 
+    # user logged in but access token expired and client needs new one to send it with request: 
+    # for more details go to comments above get_tokens_for_user view in users/views.py 
+    # the request and response shape for this view is 
+    # POST /api/token/refresh/ 
+    # Content-Type: application/json 
+    # { "refresh": "<refresh_token_here>" }
+    # response :
+    # { "access": "<new_access_token_here>" }
+    # If the refresh token is expired or invalid, the server responds with 401 Unauthorized (or sometimes Token is invalid or expired).
+    # At this point, the client cannot silently renew the session anymore.
+    # The only option is to redirect the user back to login so they can re‑authenticate with their credentials and get a fresh pair of tokens.
+
 ]

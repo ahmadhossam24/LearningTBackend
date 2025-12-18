@@ -2,7 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.utils import timezone
 
-
+# in DRF models are responsible for:
+# Defines the schema (fields, constraints).
+# Encapsulates business rules (e.g., trial limits, premium access).
+# Provides methods for persistence (create_user, save).
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:

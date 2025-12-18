@@ -55,6 +55,10 @@ SIMPLE_JWT = {
 'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+PAYPAL_CLIENT_ID = 'YOUR_PAYPAL_CLIENT_ID'
+PAYPAL_CLIENT_SECRET = 'YOUR_PAYPAL_SECRET'
+PAYPAL_MODE = 'sandbox' # or 'live'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
